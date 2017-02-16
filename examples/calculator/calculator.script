@@ -1,0 +1,15 @@
+local server = require "cucumber.server"
+local steps = require "examples.calculator.features.step_definitions.steps"
+
+function init(self)
+	self.server = server.create(9666)
+	self.server.start()
+end
+
+function final(self)
+	self.server.stop()
+end
+
+function update(self, dt)
+	self.server.update()
+end
