@@ -1,9 +1,9 @@
 [project]
 title = Cucumberr-Defold
-dependencies = https://github.com/britzl/defnet/archive/1.0.zip, http://www.defold.com/p/1170/38846/archive
+dependencies = https://github.com/britzl/defnet/archive/1.2-beta1.zip, http://www.defold.com/p/1170/38846/archive
 
 [bootstrap]
-main_collection = /examples/calculator/calculator.collectionc
+main_collection = /examples/animation/animation.collectionc
 
 [input]
 game_binding = /input/game.input_bindingc
