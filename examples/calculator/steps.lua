@@ -4,10 +4,6 @@ Before(function()
   Calculator:Reset()
 end)
 
-After(function()
-  print("I will be called after each scenario")
-end)
-
 Given("I have entered (%d+) into the calculator", function (number)
   Calculator:Enter(number)
 end)

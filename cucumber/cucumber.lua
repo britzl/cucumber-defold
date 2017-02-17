@@ -60,7 +60,6 @@ end
 -- This will invoke any before hooks
 -- @return Wire response
 local function begin_scenario()
-	print("begin_scenario")
 	_G["World"] = {}
 	for _,hook in ipairs(before_hooks) do
 		local ok, err = pcall(hook)

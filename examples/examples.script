@@ -1,0 +1,21 @@
+local wire_server = require "cucumber.wire_server"
+local steps = require "examples.features.step_definitions.steps"
+local wait = require "examples.automation.wait"
+
+function init(self)
+	self.wire_server = wire_server.create(9666)
+	self.wire_server.start()
+end
+
+function final(self)
+	self.wire_server.stop()
+end
+
+function update(self, dt)
+	self.wire_server.update()
+	wait.update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	wait.on_message(message_id, message, sender)
+end
