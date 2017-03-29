@@ -1,6 +1,6 @@
 [project]
 title = Cucumber-Defold
-dependencies = https://github.com/britzl/defnet/archive/1.2-beta1.zip, http://www.defold.com/p/1170/38846/archive
+dependencies = 
 
 [bootstrap]
 main_collection = /examples/examples.collectionc

@@ -21,11 +21,6 @@ When("I animate game object (.*) position to (%d*),(%d*) in (%d*) second", funct
 	go.cancel_animations(url, "position")
 	go.animate(url, "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(x, y, 0), go.EASING_LINEAR, duration)
 end)
-When("I animate game object (.*) position to (%d*),(%d*) in (%d*) seconds", function(url, x, y, duration)
-	wait.switch_context(url)
-	go.cancel_animations(url, "position")
-	go.animate(url, "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(x, y, 0), go.EASING_LINEAR, duration)
-end)
 
 Then("the game object (.*) should be at position (%d*),(%d*)", function (url, x, y)
 	wait.switch_context(url)
