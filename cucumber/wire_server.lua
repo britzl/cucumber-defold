@@ -1,6 +1,8 @@
 local socket = require "builtins.scripts.socket"
 local cucumber = require "cucumber.cucumber"
 local rxi_json = require "cucumber.json"
+local coxpcall = require "cucumber.coxpcall"
+pcall, xpcall, coroutine.running = coxpcall.pcall, coxpcall.xpcall, coxpcall.running
 
 local M = {}
 
