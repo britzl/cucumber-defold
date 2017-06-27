@@ -60,7 +60,7 @@ Follow this step by step guide to setup cucumber in your own project:
 3. Add ```cucumber/cucumber.script``` to the game object.
 4. Add a collection proxy with id ```testproxy``` to the game object. Point the collection proxy to the collection containing the code you wish to test. This is typically your normal bootstrap collection used when running your game, but it could also be another collection containing only the parts your wish to test.
 5. Create a script file and add it to the game object.
-6. In the script file add ```require "cucumber.cucumber"``` and also ```require()``` any Lua modules containing step definitions. Refer to the examples folder to see this in practice.
+6. In the script file ```require()``` any Lua modules containing step definitions. Refer to the examples folder to see this in practice.
 
 This is the minimum required setup to run cucumber tests in Defold. Refer to the examples folder for an actual setup made according to the above steps.
 
