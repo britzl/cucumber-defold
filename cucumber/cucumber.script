@@ -3,11 +3,11 @@ local cucumber = require "cucumber.cucumber"
 local wait = require "cucumber.automation.wait"
 
 Before(function()
-	wait.load_proxy("#testsproxy")
+	wait.load_proxy("#testproxy")
 end)
 
 After(function()
-	wait.unload_proxy("#testsproxy")
+	wait.unload_proxy("#testproxy")
 end)
 
 

@@ -56,10 +56,10 @@ You will also need a Cucumber test runner that supports the [cucumber wire proto
 Follow this step by step guide to setup cucumber in your own project:
 
 1. Create a collection to use as bootstrap collection when running cucumber tests.
-2. Add the ```cucumber/cucumber.collection``` to the collection created in step #1.
-3. Expand the added ```cucumber.collection``` in the project outline and point the ```go#testsproxy``` collection proxy to the collection containing the code you wish to test. This is typically your normal bootstrap collection used when running your game, but it could also be another collection containing only the parts your wish to test.
-4. Add a game object to the collection created in step #1.
-5. Create a script file and add it to the game object created in step #4.
+2. Add a game object to the collection.
+3. Add ```cucumber/cucumber.script``` to the game object.
+4. Add a collection proxy with id ```testproxy``` to the game object. Point the collection proxy to the collection containing the code you wish to test. This is typically your normal bootstrap collection used when running your game, but it could also be another collection containing only the parts your wish to test.
+5. Create a script file and add it to the game object.
 6. In the script file add ```require "cucumber.cucumber"``` and also ```require()``` any Lua modules containing step definitions. Refer to the examples folder to see this in practice.
 
 This is the minimum required setup to run cucumber tests in Defold. Refer to the examples folder for an actual setup made according to the above steps.
