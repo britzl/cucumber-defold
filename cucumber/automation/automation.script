@@ -1,0 +1,9 @@
+local wait = require "cucumber.automation.wait"
+
+function init(self)
+	wait.register_automation_script(msg.url())
+end
+
+function on_message(self, message_id, message, sender)
+	wait.on_message(message_id, message, sender)
+end

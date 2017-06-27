@@ -1,5 +1,0 @@
-local wait = require "examples.automation.wait"
-
-function on_message(self, message_id, message, sender)
-	wait.on_message(message_id, message, sender)
-end

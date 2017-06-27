@@ -1,4 +1,4 @@
-local wait = require "examples.automation.wait"
+local wait = require "cucumber.automation.wait"
 
 Given("the (.*) collection is loaded", function(proxy_url)
 	wait.load_proxy(proxy_url)

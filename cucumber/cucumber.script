@@ -1,6 +1,15 @@
 local wire_server = require "cucumber.wire_server"
-local steps = require "examples.features.step_definitions.steps"
-local wait = require "examples.automation.wait"
+local cucumber = require "cucumber.cucumber"
+local wait = require "cucumber.automation.wait"
+
+Before(function()
+	wait.load_proxy("#testsproxy")
+end)
+
+After(function()
+	wait.unload_proxy("#testsproxy")
+end)
+
 
 function init(self)
 	self.wire_server = wire_server.create(9666)
