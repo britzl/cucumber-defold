@@ -49,3 +49,7 @@ app_icon_144x144 = /assets/appicons/icon_144.png
 app_icon_192x192 = /assets/appicons/icon_192.png
 package = com.defold.cucumber
 
+[library]
+include_dirs = cucumber
+
+
