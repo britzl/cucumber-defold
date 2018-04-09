@@ -74,7 +74,7 @@ Launch your test runner. Minimal Ruby command line example:
 Wait for the tests to complete and review the results.
 
 ## A note on running asynchronous tests
-Cucumber tests should run the same way as if a user would have performed the tests manually (to the extent it is reasonable). This means that animations and transitions should be played and content should be loaded and unloaded. To facilitate asynchronous step definitions Cucumber for Defold provides the ```cucumber/utils/wait.lua``` module that can be used to wait for asynchronous operations to finish, certain messages to be received and time to elapse. Some examples:
+Cucumber tests should run the same way as if a user would have performed the tests manually (to the extent it is reasonable). This means that animations and transitions should be played and content should be loaded and unloaded. To facilitate asynchronous step definitions Cucumber for Defold provides the ```cucumber/automation/wait.lua``` module that can be used to wait for asynchronous operations to finish, certain messages to be received and time to elapse. Some examples:
 
 	wait.seconds(2.5)
 
@@ -89,4 +89,4 @@ Cucumber tests should run the same way as if a user would have performed the tes
 ## A note on tests manipulating game objects
 Most tests need to interact with game objects and their components in different ways, for instance to check a game objects position. When it comes to calling the go.* functions Defold only allows interaction with game objects from the same collection. This immediately becomes a problem when running cucumber tests since each step of a test is executed from the cucumber bootstrap collection and not from the collection that is being tested.
 
-This problem can be solved by passing a message to a script in the collection under test and run the code in the step definition once the message is received. To facilitate this there's a ```cucumber/automation/automation.go``` game object that can be added a collection that is tested and the ```cucumber/utils/wait.lua``` module has a ```wait.switch_context()``` function that can be called before interacting with game objects. The function will send a message to the ```automation.go``` game object and wait until the message is received before continuing to run the step.
+This problem can be solved by passing a message to a script in the collection under test and run the code in the step definition once the message is received. To facilitate this there's a ```cucumber/automation/automation.go``` game object that can be added a collection that is tested and the ```cucumber/automation/wait.lua``` module has a ```wait.switch_context()``` function that can be called before interacting with game objects. The function will send a message to the ```automation.go``` game object and wait until the message is received before continuing to run the step.
