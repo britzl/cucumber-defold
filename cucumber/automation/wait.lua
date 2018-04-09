@@ -15,7 +15,7 @@ local sequence_count = 0
 
 local automation_scripts = {}
 
-local function create_instance()
+local function create_instance(timeout)
 	local co = coroutine.running()
 	assert(co, "You must call this function from within a coroutine")
 	sequence_count = sequence_count + 1
@@ -23,7 +23,23 @@ local function create_instance()
 	local instance = {
 		id = sequence_count,
 		co = co,
+		timeout = socket.gettime() + timeout,
 	}
+	function instance.update(fn)
+		instance.update_fn = true
+		local dt = 0
+		while not fn(dt) do
+			dt = coroutine.yield()
+		end
+	end
+	function instance.on_message(fn)
+		instance.on_message_fn = true
+		local message_id, message, sender
+		while not fn(message_id, message, sender) do
+			message_id, message, sender = coroutine.yield()
+		end
+	end
+	
 	table.insert(instance_stack, instance)
 	return instance
 end
@@ -48,22 +64,38 @@ function M.register_automation_script(url)
 	automation_scripts[url.socket] = url
 end
 
+--- Wait until a function invokes a callback
+-- @param fn Function that must accept a callback as first argument
+-- @param timeout Optional timeout in seconds
+function M.until_callback(fn, timeout)
+	local instance = create_instance(timeout or 10)
+
+	local yielded = false
+	local done = false
+	fn(function()
+		done = true
+		if yielded then
+			coroutine.resume(instance.co)
+		end
+	end)
+	if not done then
+		yielded = true
+		coroutine.yield()
+	end
+	
+	remove_instance(instance)
+end
+
 --- Wait until a function returns true when called
 -- @param fn Function that must return true, will receive dt as its only argument
 -- @param timeout Optional timeout in seconds
 function M.until_true(fn, timeout)
-	local instance = create_instance()
-	instance.update = true
-
-	local timestamp = socket.gettime()
-	local dt = 0
-	while not fn(dt) do
-		dt = coroutine.yield()
-		if timeout and socket.gettime() >= (timestamp + timeout)  then
-			break
+	local instance = create_instance(timeout or 10)
+	instance.update(function(dt)
+		if fn(dt) then
+			return true
 		end
-	end
-
+	end)
 	remove_instance(instance)
 end
 
@@ -71,18 +103,12 @@ end
 -- @param fn Function that will receive message and return true if message is the correct one
 -- @param timeout Optional timeout in seconds
 function M.until_message(fn, timeout)
-	local instance = create_instance()
-	instance.message = true
-
-	local timestamp = socket.gettime()
-	local message_id, message, sender
-	while not fn(message_id, message, sender) do
-		message_id, message, sender = coroutine.yield()
-		if timeout and socket.gettime() >= (timestamp + timeout) then
-			break
+	local instance = create_instance(timeout or 10)
+	instance.on_message(function(message_id, message, sender)
+		if fn(message_id, message, sender) then
+			return true
 		end
-	end
-
+	end)
 	remove_instance(instance)
 end
 
@@ -149,8 +175,14 @@ function M.update(dt)
 		if coroutine.status(instance.co) == "dead" then
 			instance_stack[i] = nil
 		else
-			if instance.update then
-				coroutine.resume(instance.co, dt)
+			if instance.timeout and socket.gettime() > instance.timeout then
+				instance_stack[i] = nil
+			elseif instance.update_fn then
+				local ok, err = coroutine.resume(instance.co, dt)
+				if not ok then
+					print(err)
+					instance_stack[i] = nil
+				end
 			end
 			return
 		end
@@ -166,8 +198,12 @@ function M.on_message(message_id, message, sender)
 		if coroutine.status(instance.co) == "dead" then
 			instance_stack[i] = nil
 		else
-			if instance.message then
-				coroutine.resume(instance.co, message_id, message, sender)
+			if instance.on_message_fn then
+				local ok, err = coroutine.resume(instance.co, message_id, message, sender)
+				if not ok then
+					print(err)
+					instance_stack[i] = nil
+				end
 			end
 			return
 		end
