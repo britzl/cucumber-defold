@@ -37,7 +37,7 @@ local function step_match(text, pattern)
 	return {
 		id = pattern,
 		args = find_args(text, pattern),
-		source = pattern,
+		source = "unknown:0",
 		regexp = pattern
 	}
 end
