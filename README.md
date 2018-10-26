@@ -38,7 +38,9 @@ You can use the Cucumber for Defold in your own project by adding this project a
 
 https://github.com/britzl/cucumber-defold/archive/master.zip
 
-You will also need a Cucumber test runner that supports the [cucumber wire protocol](https://github.com/cucumber/cucumber/wiki/Wire-Protocol). The [Ruby version of cucumber](https://github.com/cucumber/cucumber-ruby) does this, but there are probably more. Example setup on OSX (refer to official documentation for detailed setup instructions):
+You will also need a Cucumber test runner that supports the [cucumber wire protocol](https://github.com/cucumber/cucumber/wiki/Wire-Protocol). The [Ruby version of cucumber](https://github.com/cucumber/cucumber-ruby) does this, but there are probably more. Cucumber for Defold has been tested with cucumber-ruby versions up to 2.4.0.
+
+Example setup on OSX (refer to official documentation for detailed setup instructions):
 
 	$ brew update
 	$ brew install rbenv ruby-build
@@ -51,6 +53,9 @@ You will also need a Cucumber test runner that supports the [cucumber wire proto
 
 	# Use the installed ruby version (global, local or shell options exist):
 	$ rbenv local 2.2.0
+
+	# Install cucumber
+	$ gem install cucumber -v 2.4.0
 
 # Usage
 Follow this step by step guide to setup cucumber in your own project:
@@ -69,7 +74,7 @@ Start your application with the bootstrap collection. This will start the wire s
 
 Launch your test runner. Minimal Ruby command line example:
 
-	cucumber path/to/feature/files/
+	cucumber features
 
 Wait for the tests to complete and review the results.
 
