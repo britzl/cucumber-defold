@@ -1,0 +1,3 @@
+require "cucumber.cucumber"
+require "features.step_definitions.animation"
+require "features.step_definitions.calculator"
